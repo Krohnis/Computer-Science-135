@@ -1,0 +1,56 @@
+Ricky Gutierrez
+------------------------------A---------------------------------
+(define (digitinc4 x) ;Breaks apart the integer then puts back together.
+  (createinc (mod10 (quotient x 1000))
+             (mod10 (quotient x 100))
+             (mod10 (quotient x 10))
+             (mod10 x)))
+(define (mod10 y)
+  (modulo y 10))
+
+(define (incdig x) ;Increments one digit.
+  (modulo (+ x 1) 10))
+
+(define (createint a b c d) ;Assemble four digits into an integer.
+  (+ (* a 1000) (* b 100) (* c 10) d))
+
+(define (createinc a b c d) ;Increments the four digits and puts them back into an integer.
+  (createint (incdig a) (incdig b) (incdig c) (incdig d)))
+
+------------------------------C---------------------------------
+(define (listPicker listd listp)
+    (if(null? listp)                                                                       ;condition for determining start, and end of index list
+        empty (cons(Breaker listd (- (car listp) 1))(listPicker listd (cdr listp)))))
+
+;goes through list until index is found
+(define (Breaker listd x)                                                              
+    (if(= x 0) (car listd) (Breaker (cdr listd) (- x 1))))                             
+
+------------------------------D---------------------------------
+(define (neshtlist a)                                                                    
+    (nesht a 0 (length a)))                                                          ;calls helper definition
+
+(define (nesht a done lft)                                                           ;helper function to create nesht list
+    (if (empty? a) ""                                                                      ;if list is null, return null
+        (cond                                                                              ;check to see if x is empty
+        [(= done lft)                                                                      ;even in length
+            (string-append "()" (nesht a (+ done lft) (- lft 1)))]                   ;begin recursion
+        [(= done (- lft 1))                                                                ;odd in length
+            (string-append "(" (number->string (car a)) ")" (nesht (cdr a) (+ done 1) (- lft 1)))]
+        [(< done lft)                                                                      ;haven't reached center of list
+            (string-append "(" (number->string (car a)) " " (nesht (cdr a) (+ done 1) (- lft 1)))]
+        [(> done lft)                                                                      ;past the center
+            (string-append " " (number->string (car a)) ")" (nesht (cdr a) (+ done 1) (- lft 1)))])))
+
+
+-------------------------------F--------------------------------
+(define (functionMajority f L)                                                              
+    (if(>= (counter f L) 0) #t #f))                                                         ;checks to see if isOdd is the majority of the list then returns #t if true
+
+(define (counter a b)                                                                       
+    (if (null? (cdr b))                                                                     ;checks to see if the rest of y is null
+        (if (equal? (a (car b)) #t) 1 -1)                                                   ;if y is null, checks if x is equal to the first of y
+        (+ (counter a (cons (car b) '())) (counter a (cdr b)))))                            ;else counter is called, brought together with the first of y, and added to another counter call
+
+(define (isOdd a)                                                                           
+    (if(= (modulo a 2) 1) #t #f))                                                           ;checks if x is even or odd, returns #t if odd

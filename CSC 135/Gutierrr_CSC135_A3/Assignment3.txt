@@ -1,0 +1,38 @@
+%Ricky Gutierrez
+%Assignment3
+%CSC135-03
+
+%========== Q1 ==========
+dogEnthusiast(X) :- owner(X, Y), owner(X, Z), breed(Y, dog), breed(Z, dog), Y \= Z.
+owner(fred, fido).
+owner(fred, spot).
+owner(jacob, leo).
+owner(jacob, scooby).
+owner(sarah, scooby).
+breed(spot, dog).
+breed(fido, dog).
+breed(scooby, dog).
+breed(leo, cat).
+
+%========== Q2 ==========
+listPicker(L, [], []).
+listPicker(L, [X|Y], [W|Z]) :- getElement(L, X, W), listPicker(L, Y, Z).
+getElement([X|Y], N, M) :- Q is N-1, getElement(Y, Q, M).
+getElement([X|Y], 1, X).
+
+%========== Q3 ==========
+num([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).
+cypto(G, R, I, P, T, O, C, K) :- num(X), member(G, X), member(R, X), member(I, X), member(P, X), member(T, X), member(O, X), member(C, X), member(K, X), T \= O, O \= C, C \= K,
+								 W is (T * 1000 + O * 100 + C * 10 + K), Y is (W * W), Z is (G * 10000000 + R * 1000000 + I * 100000 + P * 10000 + W),
+								 Z = Y.
+								
+%========== Q4 ==========
+interleave([],[],[]).
+interleave(X, [], [999|X]).
+interleave([], Y, [999|Y]).
+interleave([N|M],[Q|P], [N|W]) :- weave(Q, O, W), interleave(M, P, O).
+weave(Z, O, [Z|O]).
+
+%========== Q5 ==========
+digitinc(X, Y) :- X < 10, Y is mod(X + 1, 10).
+digitinc(X, Y) :- F is floor(X/10), M is mod(X, 10), digitinc(F, N), digitinc(M, W), Y is N * 10 + W.
